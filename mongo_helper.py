@@ -1,6 +1,6 @@
 from pymongo import *
 from config_utils import *
-
+import json
 
 entityMap = {
     "entity_type": "pipeline",
@@ -33,6 +33,8 @@ def getPipelineFromDb(pipelineName):
 def makePipeLineMap(pipelineName):
     modelMap=getPipelineFromDb(pipelineName)['model']
     pipeLineJsonMap={'pipeline':{'model':modelMap}}
+    iwMapArray=createIwMappingArray(modelMap)
+    pipeLineJsonMap['iw_mappings']=iwMapArray
     entityMap['entity_name']=pipelineName
     nameMap['name']=pipelineName
     pipeLineJsonMap['entity']=entityMap
@@ -40,7 +42,31 @@ def makePipeLineMap(pipelineName):
         pipeLineJsonMap[k]=nameMap[k]
     return pipeLineJsonMap    
 
+def createIwMappingArray(modelMap):
+
+    iwMappings=[]
+    for node in modelMap['nodes']:
+        nodeVal=modelMap['nodes'][node]
+        if nodeVal['type'] =='SOURCE_TABLE':
+           iwMapping={
+                "entity_type": "table",
+                "entity_id": {
+                    "$type": "oid",
+                    "$value": "ADD_HERE"
+                },
+                "recommendation": {
+                    "table_name": "ADD_HERE",
+                    "source_name": "DF_TPC_DS"
+                }
+                } 
+           iwMapping['recommendation']['table_name']=nodeVal['table']
+           iwMapping['entity_id']['$value']=nodeVal['properties']['table_id']
+           iwMappings.append(iwMapping)
+           
+    return iwMappings       
+
+
 
 if __name__ == '__main__':
     p=makePipeLineMap('derive_overwrite')
-    print p
+    print json.dumps(p)
