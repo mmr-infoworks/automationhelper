@@ -1,11 +1,11 @@
 * Prerequisities
-    ** one time
+** one time
         pip install pywebhdfs
         pip install pymongo
         brew install mysql **
         pip install MysqlDB-python ( mayneed mysql install for some libraries hence above mysql is required)
 
-    ** every time
+** every time
         change config_utils.py to reflect values on server you are using for building pipeline first time
         script will pull data from HDFS_PATH
         HIVE_METASTORE** values will be used to extract schema for the table
@@ -13,6 +13,6 @@
         ssh -L 33000:localhost:3306 ec2-user@dev2 forwards dev2 3306 port to localhost 33000
 
 
-    * Usage
+* Usage
      python pipelinehelper.py < name of pipeline> < full path to dataset directory>
      eg:python pipelinehelper.py derive_overwrite /Users/manoharm/github/rosie/content/datasets/df_manohar/
