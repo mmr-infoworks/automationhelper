@@ -50,12 +50,9 @@ def get_targettables_from_pipeline(pipeLineJson):
     return targetTables
 
 
-def do_all(pileLineFilePath,targetPath):
+def do_all(pipelineName,targetPath):
     try:
-        f=open(pileLineFilePath)
-        pipeLineMapInit = json.loads(f.read())
-        pipeLineMap = create_pipelinemap(pipeLineMapInit)
-        pipelineName = pipeLineMap['name']
+        pipeLineMap = mongo_helper.makePipeLineMap(pipelineName)
         targetLocalDir = targetPath +"/" + pipelineName
         targets = get_targettables_from_pipeline(pipeLineMap)
         #copy hdfs files
@@ -89,8 +86,6 @@ def do_all(pileLineFilePath,targetPath):
         sys.exit(1)    
 
 
-
-    
 
 #createValidationJson(sys.argv[1])  
 if __name__ == "__main__":

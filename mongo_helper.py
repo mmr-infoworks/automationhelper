@@ -30,7 +30,7 @@ def getPipelineFromDb(pipelineName):
     except errors.ConnectionFailure,e:
          print "Could not connect to MongoDB: %s" % e
 
-def makePipeLineJson(pipelineName):
+def makePipeLineMap(pipelineName):
     modelMap=getPipelineFromDb(pipelineName)['model']
     pipeLineJsonMap={'pipeline':{'model':modelMap}}
     entityMap['entity_name']=pipelineName
@@ -42,5 +42,5 @@ def makePipeLineJson(pipelineName):
 
 
 if __name__ == '__main__':
-    p=makePipeLineJson('derive_overwrite')
+    p=makePipeLineMap('derive_overwrite')
     print p
