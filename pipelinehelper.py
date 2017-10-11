@@ -61,21 +61,22 @@ def do_all(pipelineName,targetPath):
             hdfs_path = target['hdfs']
             tableTarget = targetLocalDir + "/" + table
             hdfshelper.copyDir(tableTarget +"/data", hdfs_path)
-            #copy validate.json
+        #copy validate.json
             validate_file = open(tableTarget+"/validate.json", 'w')
             validateMap = hivehelper.createvalidationmap(target)
             validate_file.write(json_pretty(validateMap))
             validate_file.close()
 
-
         #create pipeline.json
             pipeline_file = open(targetLocalDir+"/pipeline.json", 'w')
             pipeline_file.write(json_pretty(pipeLineMap))
             pipeline_file.close()
+
         #copy db.cfg
             cfg_file = open(targetLocalDir +"/db.cfg", 'w')
             cfg_file.write(DB_CFG)
             cfg_file.close()
+
        #copy domain.json
             domain_file = open(targetLocalDir + "/domain.json", 'w')
             domain_file.write(json_pretty(DOMAIN))
@@ -90,7 +91,7 @@ def do_all(pipelineName,targetPath):
 #createValidationJson(sys.argv[1])  
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print "need pipelinejson and targetdirectory to write as inputs exiting "
+        print "need pipelinename and targetdirectory to write as inputs exiting "
         sys.exit(1)
     pipeLineFile = sys.argv[1]
     targetDir = sys.argv[2]    
