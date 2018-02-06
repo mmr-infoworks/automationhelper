@@ -62,10 +62,10 @@ def do_all(pipelineName,targetPath):
             tableTarget = targetLocalDir + "/" + table
             hdfshelper.copyDir(tableTarget +"/data", hdfs_path)
         #copy validate.json
-            #validate_file = open(tableTarget+"/validate.json", 'w')
-            #validateMap = hivehelper.createvalidationmap(target)
-            #validate_file.write(json_pretty(validateMap))
-            #validate_file.close()
+            validate_file = open(tableTarget+"/validate.json", 'w')
+            validateMap = hivehelper.createvalidationmap(target)
+            validate_file.write(json_pretty(validateMap))
+            validate_file.close()
 
         #create pipeline.json
             pipeline_file = open(targetLocalDir+"/pipeline.json", 'w')
